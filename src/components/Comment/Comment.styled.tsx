@@ -13,7 +13,7 @@ export const Likes = styled.div `
     background-color:#ecf0f3;
     border-radius:7px;
     gap:0.75em;
-    padding:0.5em 0.25em;
+    padding:0.5em 0.4em;
     align-items:center;
     color:rgb(93,96,175);
     font-weight:bold;
