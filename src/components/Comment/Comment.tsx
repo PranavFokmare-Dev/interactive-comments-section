@@ -1,7 +1,9 @@
 import React from 'react'
 
 import { IComment } from '../../Models/CommentModel';
-
+import * as S from './Comment.styled';
+import plusIcon from '../../images/icon-plus.svg';
+import minusIcon from '../../images/icon-minus.svg';
 interface CommentProps{
     comment:IComment
 }
@@ -23,6 +25,16 @@ export default function Comment({comment}:CommentProps) {
 
 
   return (
-    <div>Comment</div>
+    <S.CommentContainer>
+      <S.Likes>
+        <S.Icon src = {plusIcon} alt = "plus"/>
+        {comment.score}
+        <S.Icon src = {minusIcon} alt ="minus"/>
+      </S.Likes>
+      <div>
+        {comment.content}
+      </div>
+    </S.CommentContainer>
   )
 }
+
