@@ -81,8 +81,8 @@ data.push(
     "isAReply":false,
     "user": {
       "image": { 
-        "png": "./images/avatars/image-amyrobson.png",
-        "webp": "./images/avatars/image-amyrobson.webp"
+        "png": "image-amyrobson.png",
+        "webp": "image-amyrobson.webp"
       },
       "username": "juliusomo"
     },
@@ -100,8 +100,8 @@ data.push(
     "isAReply":true,
     "user": {
       "image": { 
-        "png": "./images/avatars/image-amyrobson.png",
-        "webp": "./images/avatars/image-amyrobson.webp"
+        "png": "image-amyrobson.png",
+        "webp": "image-amyrobson.webp"
       },
       "username": "juliusomo"
     },
