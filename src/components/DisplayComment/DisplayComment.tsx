@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { IComment } from "../../Models/CommentModel";
 import * as S from "./DisplayComment.styled";
 import plusIcon from "../../images/icon-plus.svg";
 import minusIcon from "../../images/icon-minus.svg";
 import replyIcon from "../../images/icon-reply.svg";
+import { commentContext } from "../Comment/CommentStateHandler";
 interface CommentProps {
   comment: IComment;
 }
@@ -18,11 +19,16 @@ export default function DisplayComment({ comment }: CommentProps) {
 }
 
 function Like({ score }: { score: number }) {
+  const cVal = useContext(commentContext);
   return (
     <S.Likes>
-      <S.Icon src={plusIcon} alt="plus" />
+      <S.Icon src={plusIcon} alt="plus" onClick = {()=>{
+        cVal?.changeLikes(1);
+      }}/>
       {score}
-      <S.Icon src={minusIcon} alt="minus" />
+      <S.Icon src={minusIcon} alt="minus" onClick ={()=>{
+        cVal?.changeLikes(-1);
+      }} />
     </S.Likes>
   );
 }
