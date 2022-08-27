@@ -5,6 +5,8 @@ export interface IComment {
     content: string,
     createdAt: string,
     score: number,
-    user: IUser
+    user: IUser,
+    replyingTo:number;
+    isAReply:boolean;
     replies: IComment[]
   };
