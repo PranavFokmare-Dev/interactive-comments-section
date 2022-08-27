@@ -10,11 +10,29 @@ interface CommentProps {
   comment: IComment;
 }
 export default function DisplayComment({ comment }: CommentProps) {
+  const [showAddReplyModal, setShowAddReplyModal]= useState<boolean>(false);
   return (
+    <>
     <S.CommentContainer>
       <Like score={comment.score} />
-      <CommentContent comment={comment} />
+      <CommentContent comment={comment} toggleAddReply = {()=>{setShowAddReplyModal(!showAddReplyModal)}} />
     </S.CommentContainer>
+    {
+      showAddReplyModal &&
+      <S.AddReply>
+                <div>
+            <S.UserIcon
+              alt="user-icon"
+              src={require(`../../images/avatars/${comment.user.image.png}`)}
+            />
+          </div>
+          <textarea></textarea>
+          <div>
+            <button>Reply</button>
+          </div>
+    </S.AddReply>
+}</>
+    
   );
 }
 
@@ -33,8 +51,11 @@ function Like({ score }: { score: number }) {
   );
 }
 
-function CommentContent({ comment }: { comment: IComment }) {
+function CommentContent({ comment, toggleAddReply }: { comment: IComment, toggleAddReply:()=>void }) {
+
   return (
+    <>
+
     <S.CommentMainContent>
       <S.CommentHeadder>
         <S.CommentMetaData>
@@ -49,12 +70,14 @@ function CommentContent({ comment }: { comment: IComment }) {
           </div>
           <div id="createdAt">{comment.createdAt}</div>
         </S.CommentMetaData>
-        <S.Reply>
-          <img src={replyIcon} alt="reply-icon" />
+        <S.Reply onClick = {()=>{toggleAddReply()}}>
+          <img src={replyIcon} alt="reply-icon"  />
           <b>Reply</b>
         </S.Reply>
       </S.CommentHeadder>
       <div className="comment">{comment.content}</div>
     </S.CommentMainContent>
+
+    </>
   );
 }

@@ -52,3 +52,18 @@ export const Reply = styled.div`
         padding-right:0.3em;
     }
 `
+
+export const AddReply = styled.div`
+    background-color:white;
+    display:flex;
+    gap:2em; 
+    margin-top:2em;
+    padding:2em 1em;
+    & > textarea{
+        flex-grow:1;
+        height:100px;
+        border:1px solid black;
+        border-radius:10px;
+
+    }
+`
