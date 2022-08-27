@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { IComment } from "../../Models/CommentModel";
+import { getComments as getCommentIds, getReplyIdsForComment } from "../../service/getComment";
+import CommentStateHandler from "../Comment/CommentStateHandler";
 import DisplayComment from "../DisplayComment/DisplayComment";
 import * as S from "./MyComment.styled";
 
@@ -8,199 +10,31 @@ const gridCols = 50;
 const lastColGridLine = gridCols+1;
 
 export default function MyComment() {
-  const comment: IComment = {
-    id: 1,
-    content:
-      "Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You've nailed the design and the responsiveness at various breakpoints works really well.",
-    createdAt: "1 month ago",
-    score: 12,
-    user: {
-      image: {
-        png: "images/avatars/image-amyrobson.png",
-        webp: "images/avatars/image-amyrobson.webp",
-      },
-      username: "amyrobson",
-    },
-    replyingTo: -1,
-    isAReply: false,
-    replies: [
+  const [commentIds, setCommentIds] = useState<number[]>([]);
+  useEffect( () => {
+    getCommentIds().then(x => 
       {
-        id: 3,
-        content:
-          "If you're still new, I'd recommend focusing on the fundamentals of HTML, CSS, and JS before considering React. It's very tempting to jump ahead but lay a solid foundation first.",
-        createdAt: "1 week ago",
-        score: 4,
-        replyingTo: 1,
-        isAReply: true,
-        user: {
-          image: {
-            png: "images/avatars/image-ramsesmiron.png",
-            webp: "images/avatars/image-ramsesmiron.webp",
-          },
-          username: "ramsesmiron",
-        },
-        replies: [{
-          id: 100,
-          content:
-            "test",
-          createdAt: "1 week ago",
-          score: 4,
-          replyingTo: 1,
-          isAReply: true,
-          user: {
-            image: {
-              png: "images/avatars/image-ramsesmiron.png",
-              webp: "images/avatars/image-ramsesmiron.webp",
-            },
-            username: "ramsesmiron",
-          },
-          replies: [],
-        },
-        {
-          id: 101,
-          content:
-            "test",
-          createdAt: "1 week ago",
-          score: 4,
-          replyingTo: 1,
-          isAReply: true,
-          user: {
-            image: {
-              png: "images/avatars/image-ramsesmiron.png",
-              webp: "images/avatars/image-ramsesmiron.webp",
-            },
-            username: "ramsesmiron",
-          },
-          replies: [{
-            id: 100,
-            content:
-              "test",
-            createdAt: "1 week ago",
-            score: 4,
-            replyingTo: 1,
-            isAReply: true,
-            user: {
-              image: {
-                png: "images/avatars/image-ramsesmiron.png",
-                webp: "images/avatars/image-ramsesmiron.webp",
-              },
-              username: "ramsesmiron",
-            },
-            replies: [{
-              id: 100,
-              content:
-                "test",
-              createdAt: "1 week ago",
-              score: 4,
-              replyingTo: 1,
-              isAReply: true,
-              user: {
-                image: {
-                  png: "images/avatars/image-ramsesmiron.png",
-                  webp: "images/avatars/image-ramsesmiron.webp",
-                },
-                username: "ramsesmiron",
-              },
-              replies: [{
-                id: 100,
-                content:
-                  "test",
-                createdAt: "1 week ago",
-                score: 4,
-                replyingTo: 1,
-                isAReply: true,
-                user: {
-                  image: {
-                    png: "images/avatars/image-ramsesmiron.png",
-                    webp: "images/avatars/image-ramsesmiron.webp",
-                  },
-                  username: "ramsesmiron",
-                },
-                replies: [{
-                  id: 100,
-                  content:
-                    "test",
-                  createdAt: "1 week ago",
-                  score: 4,
-                  replyingTo: 1,
-                  isAReply: true,
-                  user: {
-                    image: {
-                      png: "images/avatars/image-ramsesmiron.png",
-                      webp: "images/avatars/image-ramsesmiron.webp",
-                    },
-                    username: "ramsesmiron",
-                  },
-                  replies: [{
-                    id: 100,
-                    content:
-                      "test",
-                    createdAt: "1 week ago",
-                    score: 4,
-                    replyingTo: 1,
-                    isAReply: true,
-                    user: {
-                      image: {
-                        png: "images/avatars/image-ramsesmiron.png",
-                        webp: "images/avatars/image-ramsesmiron.webp",
-                      },
-                      username: "ramsesmiron",
-                    },
-                    replies: [{
-                      id: 100,
-                      content:
-                        "test",
-                      createdAt: "1 week ago",
-                      score: 4,
-                      replyingTo: 1,
-                      isAReply: true,
-                      user: {
-                        image: {
-                          png: "images/avatars/image-ramsesmiron.png",
-                          webp: "images/avatars/image-ramsesmiron.webp",
-                        },
-                        username: "ramsesmiron",
-                      },
-                      replies: [],
-                    }],
-                  }],
-                }],
-              }],
-            }],
-          }],
-        }],
-      },
-      {
-        id: 4,
-        content:
-          "I couldn't agree more with this. Everything moves so fast and it always seems like everyone knows the newest library/framework. But the fundamentals are what stay constant.",
-        createdAt: "2 days ago",
-        score: 2,
-        replyingTo: 1,
-        isAReply: true,
-        user: {
-          image: {
-            png: "images/avatars/image-juliusomo.png",
-            webp: "images/avatars/image-juliusomo.webp",
-          },
-          username: "juliusomo",
-        },
-        replies: [],
-      },
-    ],
-  };
+        console.log(x);
+        setCommentIds(x)
+      }
+      );
+  })
+  
 
   return (
     <>
       
       <S.Grid cols={gridCols}>
-        <CommentRecursive comment={comment} level={0}/>
+        {
+          commentIds.map(ci => <CommentRecursive key = {ci} commentId={ci} level={0}/>)
+        }
+        
       </S.Grid>
     </>
   );
 }
-function CommentRecursive({comment,level}:{comment:IComment,level:number}){
-  console.log(comment.id+" "+level);
+function CommentRecursive({commentId,level}:{commentId:number,level:number}){
+  
   const verticalLines:React.ReactElement[] = [];
   for(let i = 0; i<level;i++){
     verticalLines.push(
@@ -214,6 +48,13 @@ function CommentRecursive({comment,level}:{comment:IComment,level:number}){
     </S.GridItem>
     )
   }
+
+  const [replies,setReplies] = useState<number[]>([]);
+  useEffect(
+    ()=>{
+      getReplyIdsForComment(commentId).then(x => setReplies(x));
+    },[]
+  );
   return (
     <>
     {verticalLines.map( x =>x)}
@@ -222,10 +63,10 @@ function CommentRecursive({comment,level}:{comment:IComment,level:number}){
     colEnd={lastColGridLine}
     rowStart= {null}
     rowEnd={null}>
-      <DisplayComment comment={comment}/>
+      <CommentStateHandler id={commentId}/>
     </S.GridItem>
-    {comment.replies.map(x => {
-      return <CommentRecursive comment={x} level={level+1}/>;
+    {replies.map(x => {
+      return <CommentRecursive commentId={x} level={level+1}/>;
     })}    
     </>
     
