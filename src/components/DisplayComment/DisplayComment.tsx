@@ -5,7 +5,7 @@ import * as S from "./DisplayComment.styled";
 import plusIcon from "../../images/icon-plus.svg";
 import minusIcon from "../../images/icon-minus.svg";
 import replyIcon from "../../images/icon-reply.svg";
-
+import userImg from "../../images/avatars/image-amyrobson.png";
 interface CommentProps {
   comment: IComment;
 }
@@ -36,7 +36,7 @@ function CommentContent({ comment }: { comment: IComment }) {
           <div>
             <S.UserIcon
               alt="user-icon"
-              src={require("../../" + comment.user.image.png)}
+              src={userImg}
             />
           </div>
           <div>

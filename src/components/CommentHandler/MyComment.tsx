@@ -18,7 +18,7 @@ export default function MyComment() {
         setCommentIds(x)
       }
       );
-  })
+  },[])
   
 
   return (
@@ -52,7 +52,13 @@ function CommentRecursive({commentId,level}:{commentId:number,level:number}){
   const [replies,setReplies] = useState<number[]>([]);
   useEffect(
     ()=>{
-      getReplyIdsForComment(commentId).then(x => setReplies(x));
+      getReplyIdsForComment(commentId).then(x => 
+        
+        {
+          console.log("ReplyIds");
+          console.log(x);
+          setReplies(x)
+        });
     },[]
   );
   return (
