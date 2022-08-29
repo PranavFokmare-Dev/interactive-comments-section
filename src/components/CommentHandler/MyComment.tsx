@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-import { IComment } from "../../Models/CommentModel";
 import { getComments as getCommentIds, getReplyIdsForComment } from "../../service/getComment";
 import CommentStateHandler from "../Comment/CommentStateHandler";
-import DisplayComment from "../DisplayComment/DisplayComment";
 import * as S from "./MyComment.styled";
 
-const gridCols = 50;
+const gridCols = 30;
 const lastColGridLine = gridCols+1;
 
 export default function MyComment() {
