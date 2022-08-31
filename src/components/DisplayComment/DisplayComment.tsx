@@ -70,6 +70,8 @@ function CommentContent({
   comment: IComment;
   toggleAddReply: () => void;
 }) {
+  const user =useContext(userContext);
+  const isCurrentUserComment = user?.username === comment.user.username;
   return (
     <>
       <S.CommentMainContent>
@@ -84,7 +86,9 @@ function CommentContent({
             <div>
               <b>{comment.user.username}</b>
             </div>
+            {isCurrentUserComment && <div id = "youIcon">you</div>}
             <div id="createdAt">{comment.createdAt}</div>
+            
           </S.CommentMetaData>
           <S.Reply
             onClick={() => {

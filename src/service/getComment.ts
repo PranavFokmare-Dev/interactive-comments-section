@@ -81,8 +81,8 @@ data.push(
     "isAReply":false,
     "user": {
       "image": { 
-        "png": "image-amyrobson.png",
-        "webp": "image-amyrobson.webp"
+        "png": "image-juliusomo.png",
+        "webp": "image-juliusomo.webp"
       },
       "username": "juliusomo"
     },
@@ -100,8 +100,8 @@ data.push(
     "isAReply":true,
     "user": {
       "image": { 
-        "png": "image-amyrobson.png",
-        "webp": "image-amyrobson.webp"
+        "png": "image-juliusomo.png",
+        "webp": "image-juliusomo.webp"
       },
       "username": "juliusomo"
     },

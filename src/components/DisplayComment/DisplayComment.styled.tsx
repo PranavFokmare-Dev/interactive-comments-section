@@ -41,6 +41,13 @@ export const CommentMetaData = styled.div`
     &>#createdAt{
         color:grey;
     }
+    & #youIcon{ 
+        color:white;
+        background-color:rgb(93,96,175);;
+        padding:0em 0.5em;
+        height:1.75em;
+        font-weight:bold;
+    }
 `
 export const UserIcon = styled.img`
     height:2em;
