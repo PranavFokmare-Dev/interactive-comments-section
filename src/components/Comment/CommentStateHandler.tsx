@@ -7,13 +7,13 @@ import DisplayComment from '../DisplayComment/DisplayComment';
 interface ICommentContext {
   comment:IComment|null;
   changeLikes:(num:number) => void;
-  insertReply:(reply :string) => void;
+  insertReply:(reply :string) => Promise<void>;
   updateComment:(content:string) => void;
   deleteComment:()=>void;
   isDeleted:boolean;
 }
 export const commentContext = React.createContext<ICommentContext|null>(null);
-export default function CommentStateHandler({id,insertReply}:{id:number,insertReply:(c:string)=>void}) {
+export default function CommentStateHandler({id,insertReply}:{id:number,insertReply:(c:string)=>Promise<void>}) {
     const [comment, setComment] = useState<IComment|null>(null);
     const [isDeleted,setIsDeleted] = useState<boolean>(false);
     function updateComment(content:string){

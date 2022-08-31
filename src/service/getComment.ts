@@ -110,6 +110,7 @@ data.push(
 );
 
 export async function getComments():Promise<number[]>{
+  await delay();
     return data.map(c => c.id);
 }
 
@@ -117,6 +118,7 @@ export async function getCommentInfo(id:number):Promise<IComment|null>{
     const x = data.find(x => x.id  === id);
     console.log("ID",id);
     console.log(x);
+    await delay();
     return (x===undefined)?null:x;
 }
 
@@ -125,10 +127,11 @@ export async function getReplyIdsForComment(id:number):Promise<number[]>{
   if(comment===undefined){
     return [];
   }
+  await delay();
   return data.filter(x => x.replyingTo === id).map(x => x.id);
 }
 
-export function addComment(content:string,user:IUser){
+export async function addComment(content:string,user:IUser){
   const comment:IComment = {
     content:content,
     createdAt:Date.now().toString(),
@@ -140,9 +143,10 @@ export function addComment(content:string,user:IUser){
     user: user
   };
  data.push(comment);
+ await delay();
  return comment.id; 
 }
-export function addReply(replyingTo:number,content:string,user:IUser){
+export async function addReply(replyingTo:number,content:string,user:IUser){
   const comment:IComment = {
     content:content,
     createdAt:Date.now().toString(),
@@ -154,5 +158,12 @@ export function addReply(replyingTo:number,content:string,user:IUser){
     user: user
   };
  data.push(comment);
+ await delay();
  return comment.id; 
+}
+
+function delay(){
+  return new Promise((resolve,reject)=>{
+    setTimeout(resolve,10000);
+  })
 }

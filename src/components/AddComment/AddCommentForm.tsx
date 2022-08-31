@@ -4,7 +4,7 @@ import * as S from "./AddCommentForm.styled";
 import { IUser } from "../../Models/UserModel";
 interface AddCommentFormProps {
   user: IUser;
-  insertComment: (content: string) => void;
+  insertComment: (content: string) => Promise<void>;
   buttonName:string;
 }
 export default function AddCommentForm({
@@ -13,6 +13,7 @@ export default function AddCommentForm({
   buttonName
 }: AddCommentFormProps) {
   const [comment, setComment] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
   return (
     <S.AddReply>
       <div>
@@ -26,17 +27,21 @@ export default function AddCommentForm({
           setComment(e.target.value);
         }}
         value={comment}
+        disabled = {loading}
       ></textarea>
       <div className="button">
-        <button
-          onClick={() => {
-            insertComment(comment);
+        <button disabled = {loading}
+          onClick={async () => {
+            setLoading(true);
+            await insertComment(comment);
+            setLoading(false);
             setComment("");
           }}
         >
           <b>{buttonName}</b>
         </button>
       </div>
+      {loading && <div>ITS LOADING</div> }
     </S.AddReply>
   );
 }

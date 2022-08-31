@@ -4,14 +4,14 @@ import { addReply, getReplyIdsForComment } from "../service/getComment";
 
 type replyHookReturn = {
     replies:number[];
-    insertReply:(r:string)=>void;
+    insertReply:(r:string)=>Promise<void>;
 }
 
 export function useReplyHook(commentId:number, user:IUser|null){
     const [replies, setReplies] = useState<number[]>([]);
-    function insertReply(content: string) {
+    async function insertReply(content: string) {
       if (user != null) {
-        const replyId = addReply(commentId, content, user);
+        const replyId = await addReply(commentId, content, user);
         const newReplies = [...replies];
         newReplies.unshift(replyId);
         setReplies(newReplies);

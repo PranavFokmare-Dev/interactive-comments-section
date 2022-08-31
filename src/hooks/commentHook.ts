@@ -5,9 +5,9 @@ import { getUserInfo } from "../service/userImage";
 
 export function useCommentHook({user,shouldFetchComments}:{user:IUser|null,shouldFetchComments:boolean}){
     const [commentIds, setCommentIds] = useState<number[]>([]);
-    function insertComment(content: string) {
+    async function insertComment(content: string) {
       if (user != null) {
-        const commentId = addComment(content, user);
+        const commentId = await addComment(content, user);
         const comments = [...commentIds];
         comments.unshift(commentId);
         setCommentIds(comments);

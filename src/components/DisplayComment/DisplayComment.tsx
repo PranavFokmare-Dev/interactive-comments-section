@@ -32,8 +32,8 @@ export default function DisplayComment({ comment }: CommentProps) {
       {showAddReplyModal && user != null && cv != null && (
         <AddCommentForm
           user={user}
-          insertComment={(reply: string) => {
-            cv.insertReply(reply);
+          insertComment={async (reply: string) => {
+            await cv.insertReply(reply);
             setShowAddReplyModal(false);
           }}
           buttonName="REPLY"
