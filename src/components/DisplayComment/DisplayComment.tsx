@@ -72,6 +72,8 @@ function CommentContent({
   comment: IComment;
   toggleAddReply: () => void;
 }) {
+  const cv = useContext(commentContext);
+  const [isEditing,setIsEditing] = useState(false);
   const user = useContext(userContext);
   const isCurrentUserComment = user?.username === comment.user.username;
   return (
@@ -101,7 +103,9 @@ function CommentContent({
               </S.IconContainer>
             )}
             {isCurrentUserComment && (
-              <S.IconContainer>
+              <S.IconContainer onClick = {()=>{
+                setIsEditing(true);
+              }}>
                 <S.IconHoverOpaq>
                   <img src={editIcon} alt="edit" />
                   <b>Edit</b>
@@ -120,10 +124,25 @@ function CommentContent({
             </S.IconContainer>
           </S.RightHead>
         </S.CommentHeadder>
-        <div className="comment">{comment.content}</div>
+        {(isEditing)?<EditComment callback={()=>setIsEditing(false)}/>:<div className="comment">{comment.content}</div>}
       </S.CommentMainContent>
     </>
   );
+}
+
+function EditComment({callback}:{callback:()=>void}){
+    const cv = useContext(commentContext);
+    const startingComment = (cv!=null && cv.comment!=null)?cv.comment.content:"";
+    const [editComment,setEditComment] = useState<string>(startingComment);
+    return (
+      <>
+      <textarea onChange = {(e)=>setEditComment(e.target.value)} value = {editComment}>
+      </textarea>
+      <button onClick = {()=>{cv?.updateComment(editComment); callback();}}>Update</button>
+      </>
+      
+    )
+
 }
 
 
