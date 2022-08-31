@@ -164,6 +164,6 @@ export async function addReply(replyingTo:number,content:string,user:IUser){
 
 function delay(){
   return new Promise((resolve,reject)=>{
-    setTimeout(resolve,10000);
+    setTimeout(resolve,0);
   })
 }
