@@ -117,9 +117,6 @@ export async function getComments():Promise<number[]>{
 
 export async function getCommentInfo(id:number):Promise<IComment|null>{
     const x = data.find(x => x.id  === id);
-    console.log("ID",id);
-    console.log(x);
-    await delay(3);
     return (x===undefined)?null:x;
 }
 
@@ -128,7 +125,7 @@ export async function getReplyIdsForComment(id:number):Promise<number[]>{
   if(comment===undefined){
     return [];
   }
-  await delay(3);
+  await delay();
   return data.filter(x => x.replyingTo === id).map(x => x.id);
 }
 

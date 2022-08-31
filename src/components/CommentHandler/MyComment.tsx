@@ -5,6 +5,7 @@ import { useCommentHook } from "../../hooks/commentHook";
 import { ResponseStatus } from "../../Models/ApiResponse";
 import { GridProps } from "../../Models/GridModel";
 import AddCommentForm from "../AddComment/AddCommentForm";
+import { Spinner } from "../utilities/Spinner";
 import { CommentRecursive } from "./CommentRecursive";
 import * as S from "./MyComment.styled";
 
@@ -48,7 +49,7 @@ function ShowOldComments(){
     fetchComments();
   },[]);
   if(status === ResponseStatus.loading)
-  return <div>ITS LOADING</div> 
+  return <Spinner/> 
   return (
     <>
       <S.Grid cols={GridProps.gridCols}>

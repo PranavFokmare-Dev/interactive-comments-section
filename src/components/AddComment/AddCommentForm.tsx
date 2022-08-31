@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import * as S from "./AddCommentForm.styled";
 import { IUser } from "../../Models/UserModel";
+import { Spinner } from "../utilities/Spinner";
 interface AddCommentFormProps {
   user: IUser;
   insertComment: (content: string) => Promise<void>;
@@ -15,6 +16,7 @@ export default function AddCommentForm({
   const [comment, setComment] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   return (
+    <>
     <S.AddReply>
       <div>
         <S.UserIcon
@@ -41,7 +43,10 @@ export default function AddCommentForm({
           <b>{buttonName}</b>
         </button>
       </div>
-      {loading && <div>ITS LOADING</div> }
+      
     </S.AddReply>
+    {loading && <Spinner/> }
+    </>
+    
   );
 }
