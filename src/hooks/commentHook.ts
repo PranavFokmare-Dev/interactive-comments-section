@@ -3,7 +3,7 @@ import { IUser } from "../Models/UserModel";
 import { addComment,getComments } from "../service/getComment";
 import { getUserInfo } from "../service/userImage";
 
-export function useCommentHook({user,setUser}:{user:IUser|null,setUser:React.Dispatch<React.SetStateAction<IUser | null>>}){
+export function useCommentHook({user,shouldFetchComments}:{user:IUser|null,shouldFetchComments:boolean}){
     const [commentIds, setCommentIds] = useState<number[]>([]);
     function insertComment(content: string) {
       if (user != null) {
@@ -14,11 +14,14 @@ export function useCommentHook({user,setUser}:{user:IUser|null,setUser:React.Dis
       }
     }
     useEffect(() => {
-      getComments().then((x) => {
-        console.log(x);
-        setCommentIds(x);
-      });
-      getUserInfo().then((u) => setUser(u));
+      if(shouldFetchComments){
+        getComments().then((x) => {
+          console.log(x);
+          setCommentIds(x);
+        });
+       
+      }
+
     }, []);
   
     return {

@@ -1,21 +1,29 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
+import { userContext } from "../../App";
 
 import { useCommentHook } from "../../hooks/commentHook";
 import { GridProps } from "../../Models/GridModel";
-import { IUser } from "../../Models/UserModel";
 import AddCommentForm from "../AddComment/AddCommentForm";
 import { CommentRecursive } from "./CommentRecursive";
 import * as S from "./MyComment.styled";
 
-export const userContext = React.createContext<IUser | null>(null);
+
 export default function MyComment() {
-  const [user, setUser] = useState<IUser | null>(null);
-  const { commentIds, insertComment } = useCommentHook({ user, setUser });
+ 
+  return (
+    <>
+      <ShowNewComments/>
+      <ShowOldComments/>
+    </>
+  );
+}
+function ShowNewComments(){
+  const user = useContext(userContext);
+  const { commentIds,insertComment } = useCommentHook({user,shouldFetchComments:true});
 
   return (
     <>
       <S.Grid cols={GridProps.gridCols}>
-        <userContext.Provider value={user}>
           {user != null && (
             <S.GridItem colStart={1} colEnd={GridProps.lastColGridLine}>
               <AddCommentForm
@@ -28,7 +36,19 @@ export default function MyComment() {
           {commentIds.map((ci) => (
             <CommentRecursive key={ci} commentId={ci} level={0} />
           ))}
-        </userContext.Provider>
+      </S.Grid>
+    </>
+  );
+}
+function ShowOldComments(){
+  const user = useContext(userContext);
+  const { commentIds } = useCommentHook({user,shouldFetchComments:true});
+  return (
+    <>
+      <S.Grid cols={GridProps.gridCols}>
+          {commentIds.map((ci) => (
+            <CommentRecursive key={ci} commentId={ci} level={0} />
+          ))}
       </S.Grid>
     </>
   );

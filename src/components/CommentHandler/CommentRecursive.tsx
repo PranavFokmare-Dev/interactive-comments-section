@@ -1,13 +1,13 @@
 import React from "react";
+import { userContext } from "../../App";
 
 import { useReplyHook } from "../../hooks/replyHook";
 import { GridProps } from "../../Models/GridModel";
 import CommentStateHandler from "../Comment/CommentStateHandler";
-import { userContext } from "./MyComment";
 import * as S from "./MyComment.styled";
 
 
-export function CommentRecursive({
+export const CommentRecursive = React.memo(function CommentRecursive({
     commentId,
     level,
   }: {
@@ -37,4 +37,6 @@ export function CommentRecursive({
       </>
     );
   }
+
+);
   

@@ -9,7 +9,7 @@ import deleteIcon from "../../images/icon-delete.svg";
 import editIcon from "../../images/icon-edit.svg";
 import { commentContext } from "../Comment/CommentStateHandler";
 import AddCommentForm from "../AddComment/AddCommentForm";
-import { userContext } from "../CommentHandler/MyComment";
+import { userContext } from "../../App";
 interface CommentProps {
   comment: IComment;
 }
