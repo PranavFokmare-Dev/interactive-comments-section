@@ -136,9 +136,15 @@ function EditComment({callback}:{callback:()=>void}){
     const [editComment,setEditComment] = useState<string>(startingComment);
     return (
       <>
-      <textarea onChange = {(e)=>setEditComment(e.target.value)} value = {editComment}>
-      </textarea>
-      <button onClick = {()=>{cv?.updateComment(editComment); callback();}}>Update</button>
+      <S.EditTextArea onChange = {(e)=>setEditComment(e.target.value)} value = {editComment}>
+      </S.EditTextArea>
+      <S.EditButton>
+        <div className = "button">
+
+        <button onClick = {()=>{cv?.updateComment(editComment); callback();}}>Update</button>
+        </div>
+
+        </S.EditButton>
       </>
       
     )

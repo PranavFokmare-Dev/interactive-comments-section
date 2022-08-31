@@ -1,13 +1,7 @@
 import styled from "styled-components"
-export const AddReply = styled.div`
-    background-color:white;
-    display:flex;
-    gap:2em; 
-    margin-top:2em;
-    padding:2em 1em;
-    border-radius:10px;
-    & > textarea{
-        flex-grow:1;
+import {css} from "styled-components";
+export const textarea = css`
+     flex-grow:1;
         height:80px;
         border:1px solid black;
         border-radius:10px;
@@ -18,9 +12,9 @@ export const AddReply = styled.div`
             border:1px solid black;
             outline:0px;
         }
-    }
-    & > .button  button{
-        background-color:rgb(134,132,205);
+`;
+export const btn = css`
+background-color:rgb(134,132,205);
         padding:1em 1.5em;
         color:white;
         border:0px;
@@ -30,6 +24,21 @@ export const AddReply = styled.div`
             background-color:rgb(196,197,241);
             color:rgb(252,254,255);
         }
+`;
+
+
+export const AddReply = styled.div`
+    background-color:white;
+    display:flex;
+    gap:2em; 
+    margin-top:2em;
+    padding:2em 1em;
+    border-radius:10px;
+    & > textarea{
+       ${textarea}
+    }
+    & > .button  button{
+      ${btn}
     }
 `
 

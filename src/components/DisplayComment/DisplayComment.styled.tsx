@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { btn, textarea } from '../AddComment/AddCommentForm.styled';
 
 export const CommentContainer = styled.div`
     display:flex;
@@ -91,3 +92,12 @@ export const AddReply = styled.div`
 
     }
 `
+export const EditTextArea = styled.textarea`
+    ${textarea}
+    width:100%;
+`
+export const EditButton = styled.div`
+    & > .button  button{
+       ${btn}
+       font-weight:bold;
+       }`;
