@@ -10,3 +10,5 @@ export interface IComment {
     isAReply:boolean;
     replies: IComment[]
   };
+
+  

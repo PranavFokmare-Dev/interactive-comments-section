@@ -1,3 +1,4 @@
+import { ApiResponse } from "../Models/ApiResponse";
 import { IComment } from "../Models/CommentModel";
 import { IUser } from "../Models/UserModel";
 
@@ -110,15 +111,15 @@ data.push(
 );
 
 export async function getComments():Promise<number[]>{
-  await delay();
-    return data.map(c => c.id);
+  await delay(3);
+  return data.map(c => c.id);
 }
 
 export async function getCommentInfo(id:number):Promise<IComment|null>{
     const x = data.find(x => x.id  === id);
     console.log("ID",id);
     console.log(x);
-    await delay();
+    await delay(3);
     return (x===undefined)?null:x;
 }
 
@@ -127,7 +128,7 @@ export async function getReplyIdsForComment(id:number):Promise<number[]>{
   if(comment===undefined){
     return [];
   }
-  await delay();
+  await delay(3);
   return data.filter(x => x.replyingTo === id).map(x => x.id);
 }
 
@@ -143,7 +144,7 @@ export async function addComment(content:string,user:IUser){
     user: user
   };
  data.push(comment);
- await delay();
+ await delay(3);
  return comment.id; 
 }
 export async function addReply(replyingTo:number,content:string,user:IUser){
@@ -158,12 +159,12 @@ export async function addReply(replyingTo:number,content:string,user:IUser){
     user: user
   };
  data.push(comment);
- await delay();
+ await delay(3);
  return comment.id; 
 }
 
-function delay(){
+function delay(numOfSecs?:number){
   return new Promise((resolve,reject)=>{
-    setTimeout(resolve,0);
+    setTimeout(resolve,(numOfSecs===undefined)?0:numOfSecs*1000);
   })
 }

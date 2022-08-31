@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { ResponseStatus } from '../../Models/ApiResponse';
 
 import { IComment } from '../../Models/CommentModel'
 import { getCommentInfo } from '../../service/getComment';
@@ -17,6 +18,8 @@ export const commentContext = React.createContext<ICommentContext|null>(null);
 export default function CommentStateHandler({id,insertReply}:{id:number,insertReply:(c:string)=>Promise<void>}) {
     const [comment, setComment] = useState<IComment|null>(null);
     const [isDeleted,setIsDeleted] = useState<boolean>(false);
+    const [responseStatus, setResponseStatus] = useState<ResponseStatus>(ResponseStatus.none);
+
     function updateComment(content:string){
       if(comment!=null){
         const newComment = {...comment};
@@ -56,11 +59,16 @@ export default function CommentStateHandler({id,insertReply}:{id:number,insertRe
     }
 
     useEffect(() => {
-      getCommentInfo(id).then(x => setComment(x));
+      setResponseStatus(ResponseStatus.loading);
+      getCommentInfo(id).then(x => {setComment(x)
+      setResponseStatus(ResponseStatus.success);
+      });
     },[]);
+
   return (
     <commentContext.Provider value = {{comment, like,dislike,insertReply,updateComment,deleteComment,isDeleted}}>
-    {(comment!=null) && <DisplayComment comment={comment}/>}
+    {(responseStatus === ResponseStatus.success && comment!=null)?<DisplayComment comment={comment}/>:<div>Loading Comment</div>}
+    
     </commentContext.Provider>
   )
 }

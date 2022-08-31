@@ -1,7 +1,8 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { userContext } from "../../App";
 
 import { useCommentHook } from "../../hooks/commentHook";
+import { ResponseStatus } from "../../Models/ApiResponse";
 import { GridProps } from "../../Models/GridModel";
 import AddCommentForm from "../AddComment/AddCommentForm";
 import { CommentRecursive } from "./CommentRecursive";
@@ -42,7 +43,12 @@ function ShowNewComments(){
 }
 function ShowOldComments(){
   const user = useContext(userContext);
-  const { commentIds } = useCommentHook({user,shouldFetchComments:true});
+  const { commentIds, fetchComments, status} = useCommentHook({user,shouldFetchComments:true});
+  useEffect(()=>{
+    fetchComments();
+  },[]);
+  if(status === ResponseStatus.loading)
+  return <div>ITS LOADING</div> 
   return (
     <>
       <S.Grid cols={GridProps.gridCols}>
