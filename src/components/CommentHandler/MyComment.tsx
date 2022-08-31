@@ -1,4 +1,5 @@
-import React, { useContext, useEffect } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useContext, useEffect } from "react";
 import { userContext } from "../../App";
 
 import { useCommentHook } from "../../hooks/commentHook";
