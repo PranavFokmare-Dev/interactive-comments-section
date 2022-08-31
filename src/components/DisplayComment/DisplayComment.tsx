@@ -17,10 +17,11 @@ export default function DisplayComment({ comment }: CommentProps) {
   const [showAddReplyModal, setShowAddReplyModal] = useState<boolean>(false);
   const user = useContext(userContext);
   const cv = useContext(commentContext);
+  const isDeleted = (cv)?cv.isDeleted:false;
   return (
     <>
       <S.CommentContainer>
-        <Like score={comment.score} />
+        {!isDeleted && <Like score={comment.score} />}
         <CommentContent
           comment={comment}
           toggleAddReply={() => {
@@ -76,6 +77,8 @@ function CommentContent({
   const [isEditing,setIsEditing] = useState(false);
   const user = useContext(userContext);
   const isCurrentUserComment = user?.username === comment.user.username;
+  const isDeleted = (cv)?cv.isDeleted:false;
+  const showSection = isCurrentUserComment && !isDeleted;
   return (
     <>
       <S.CommentMainContent>
@@ -90,19 +93,19 @@ function CommentContent({
             <div>
               <b>{comment.user.username}</b>
             </div>
-            {isCurrentUserComment && <div id="youIcon">you</div>}
+            {showSection && <div id="youIcon">you</div>}
             <div id="createdAt">{comment.createdAt}</div>
           </S.CommentMetaData>
           <S.RightHead>
-            {isCurrentUserComment && (
-              <S.IconContainer $color={"rgb(228,112,123)"}>
+            {showSection && (
+              <S.IconContainer $color={"rgb(228,112,123)"} onClick = {()=>{cv?.deleteComment()}}>
                 <S.IconHoverOpaq>
                   <img src={deleteIcon} alt="delete" />
                   <b>Delete</b>
                 </S.IconHoverOpaq>
               </S.IconContainer>
             )}
-            {isCurrentUserComment && (
+            {showSection && (
               <S.IconContainer onClick = {()=>{
                 setIsEditing(true);
               }}>
