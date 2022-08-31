@@ -6,7 +6,8 @@ import DisplayComment from '../DisplayComment/DisplayComment';
 
 interface ICommentContext {
   comment:IComment|null;
-  changeLikes:(num:number) => void;
+  like:()=>void;
+  dislike:()=>void;
   insertReply:(reply :string) => Promise<void>;
   updateComment:(content:string) => void;
   deleteComment:()=>void;
@@ -31,6 +32,12 @@ export default function CommentStateHandler({id,insertReply}:{id:number,insertRe
         setComment(newComment);
       }
     }
+    function like(){
+      changeLikes(1);
+    }
+    function dislike(){
+      changeLikes(-1);
+    }
     function deleteComment(){
       if(comment!=null){
         const deletedComment : IComment= {
@@ -52,7 +59,7 @@ export default function CommentStateHandler({id,insertReply}:{id:number,insertRe
       getCommentInfo(id).then(x => setComment(x));
     },[]);
   return (
-    <commentContext.Provider value = {{comment, changeLikes,insertReply,updateComment,deleteComment,isDeleted}}>
+    <commentContext.Provider value = {{comment, like,dislike,insertReply,updateComment,deleteComment,isDeleted}}>
     {(comment!=null) && <DisplayComment comment={comment}/>}
     </commentContext.Provider>
   )

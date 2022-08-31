@@ -43,15 +43,25 @@ export default function DisplayComment({ comment }: CommentProps) {
   );
 }
 
+enum LikeEnum{
+  like = "like",
+  dislike="dislike",
+  none = "none"
+}
 function Like({ score }: { score: number }) {
   const cVal = useContext(commentContext);
+  const [liked, setLiked] = useState<LikeEnum>(LikeEnum.none);
   return (
     <S.Likes>
       <S.Icon
         src={plusIcon}
         alt="plus"
         onClick={() => {
-          cVal?.changeLikes(1);
+          if(liked !== LikeEnum.like){
+            cVal?.like();
+            setLiked((liked === LikeEnum.dislike)?LikeEnum.none:LikeEnum.like);
+          }
+
         }}
       />
       {score}
@@ -59,7 +69,10 @@ function Like({ score }: { score: number }) {
         src={minusIcon}
         alt="minus"
         onClick={() => {
-          cVal?.changeLikes(-1);
+          if(liked !== LikeEnum.dislike){
+            cVal?.dislike();
+            setLiked((liked === LikeEnum.like)?LikeEnum.none:LikeEnum.dislike);
+          }
         }}
       />
     </S.Likes>
