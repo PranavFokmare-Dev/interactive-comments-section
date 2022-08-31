@@ -134,7 +134,7 @@ export async function getReplyIdsForComment(id:number):Promise<number[]>{
 export async function addComment(content:string,user:IUser){
   const comment:IComment = {
     content:content,
-    createdAt:Date.now().toString(),
+    createdAt:"today",
     score:0,
     replies:[],
     isAReply:false,
@@ -149,7 +149,7 @@ export async function addComment(content:string,user:IUser){
 export async function addReply(replyingTo:number,content:string,user:IUser){
   const comment:IComment = {
     content:content,
-    createdAt:Date.now().toString(),
+    createdAt:"today",
     score:0,
     replies:[],
     isAReply:true,
