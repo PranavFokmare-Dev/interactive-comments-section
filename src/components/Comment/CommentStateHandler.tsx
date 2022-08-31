@@ -6,9 +6,10 @@ import DisplayComment from '../DisplayComment/DisplayComment';
 interface ICommentContext {
   comment:IComment|null;
   changeLikes:(num:number) => void;
+  insertReply:(reply :string) => void;
 }
 export const commentContext = React.createContext<ICommentContext|null>(null);
-export default function CommentStateHandler({id}:{id:number}) {
+export default function CommentStateHandler({id,insertReply}:{id:number,insertReply:(c:string)=>void}) {
     const [comment, setComment] = useState<IComment|null>(null);
     function changeLikes(num:number){
       if(comment!=null){
@@ -17,11 +18,12 @@ export default function CommentStateHandler({id}:{id:number}) {
         setComment(newComment);
       }
     }
+
     useEffect(() => {
       getCommentInfo(id).then(x => setComment(x));
     },[]);
   return (
-    <commentContext.Provider value = {{comment, changeLikes}}>
+    <commentContext.Provider value = {{comment, changeLikes,insertReply}}>
     {(comment!=null) && <DisplayComment comment={comment}/>}
     </commentContext.Provider>
   )
