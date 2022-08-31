@@ -11,20 +11,12 @@ export const Grid = styled.div`
    
 `
 interface gridItemProps{
-    rowStart:null|number;
-    rowEnd:null|number;
     colStart:null|number;
     colEnd:null|number;
 }
 export const GridItem = styled.div`
     ${(props:gridItemProps)=>{
         let cssProps = "";
-        if(props.rowStart!=null){
-            cssProps+= `grid-row-start:${props.rowStart};`;
-        }
-        if(props.rowEnd!=null){
-            cssProps+= `grid-row-end:${props.rowEnd};`;
-        }
         if(props.colStart!=null){
             cssProps+= `grid-column-start:${props.colStart};`;
         }

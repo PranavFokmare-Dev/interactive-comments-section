@@ -1,78 +1,35 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
-import { getComments as getCommentIds, getReplyIdsForComment } from "../../service/getComment";
-import CommentStateHandler from "../Comment/CommentStateHandler";
+import { useCommentHook } from "../../hooks/commentHook";
+import { GridProps } from "../../Models/GridModel";
+import { IUser } from "../../Models/UserModel";
+import AddCommentForm from "../AddComment/AddCommentForm";
+import { CommentRecursive } from "./CommentRecursive";
 import * as S from "./MyComment.styled";
 
-const gridCols = 30;
-const lastColGridLine = gridCols+1;
-
+export const userContext = React.createContext<IUser | null>(null);
 export default function MyComment() {
-  const [commentIds, setCommentIds] = useState<number[]>([]);
-  useEffect( () => {
-    getCommentIds().then(x => 
-      {
-        console.log(x);
-        setCommentIds(x)
-      }
-      );
-  },[])
-  
+  const [user, setUser] = useState<IUser | null>(null);
+  const { commentIds, insertComment } = useCommentHook({ user, setUser });
 
   return (
     <>
-      
-      <S.Grid cols={gridCols}>
-        {
-          commentIds.map(ci => <CommentRecursive key = {ci} commentId={ci} level={0}/>)
-        }
-        
+      <S.Grid cols={GridProps.gridCols}>
+        <userContext.Provider value={user}>
+          {user != null && (
+            <S.GridItem colStart={1} colEnd={GridProps.lastColGridLine}>
+              <AddCommentForm
+                user={user}
+                insertComment={insertComment}
+                buttonName="SEND"
+              />
+            </S.GridItem>
+          )}
+          {commentIds.map((ci) => (
+            <CommentRecursive key={ci} commentId={ci} level={0} />
+          ))}
+        </userContext.Provider>
       </S.Grid>
     </>
   );
-}
-function CommentRecursive({commentId,level}:{commentId:number,level:number}){
-  
-  const verticalLines:React.ReactElement[] = [];
-  for(let i = 0; i<level;i++){
-    verticalLines.push(
-      <S.GridItem
-      colStart={i+1}
-      colEnd={i+2}
-      rowStart={null}
-      rowEnd={null}
-    >
-      <S.VerticalLine />
-    </S.GridItem>
-    )
-  }
-
-  const [replies,setReplies] = useState<number[]>([]);
-  useEffect(
-    ()=>{
-      getReplyIdsForComment(commentId).then(x => 
-        
-        {
-          console.log("ReplyIds");
-          console.log(x);
-          setReplies(x)
-        });
-    },[]
-  );
-  return (
-    <>
-    {verticalLines.map( x =>x)}
-    <S.GridItem
-    colStart={level+1}
-    colEnd={lastColGridLine}
-    rowStart= {null}
-    rowEnd={null}>
-      <CommentStateHandler id={commentId}/>
-    </S.GridItem>
-    {replies.map(x => {
-      return <CommentRecursive commentId={x} level={level+1}/>;
-    })}    
-    </>
-    
-  )
 }

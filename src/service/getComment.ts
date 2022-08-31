@@ -1,5 +1,6 @@
 import { json } from "stream/consumers";
 import { IComment } from "../Models/CommentModel";
+import { IUser } from "../Models/UserModel";
 
 const data:IComment[] = [];
 
@@ -126,4 +127,33 @@ export async function getReplyIdsForComment(id:number):Promise<number[]>{
     return [];
   }
   return data.filter(x => x.replyingTo === id).map(x => x.id);
+}
+
+export function addComment(content:string,user:IUser){
+  const comment:IComment = {
+    content:content,
+    createdAt:Date.now().toString(),
+    score:0,
+    replies:[],
+    isAReply:false,
+    replyingTo:-1,
+    id:Date.now(),
+    user: user
+  };
+ data.push(comment);
+ return comment.id; 
+}
+export function addReply(replyingTo:number,content:string,user:IUser){
+  const comment:IComment = {
+    content:content,
+    createdAt:Date.now().toString(),
+    score:0,
+    replies:[],
+    isAReply:true,
+    replyingTo:replyingTo,
+    id:Date.now(),
+    user: user
+  };
+ data.push(comment);
+ return comment.id; 
 }
