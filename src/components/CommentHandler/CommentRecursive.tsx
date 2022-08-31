@@ -32,7 +32,7 @@ export function CommentRecursive({
           <CommentStateHandler id={commentId} insertReply={insertReply} />
         </S.GridItem>
         {replies.map((x) => {
-          return <CommentRecursive commentId={x} level={level + 1} />;
+          return <CommentRecursive key = {x} commentId={x} level={level + 1} />;
         })}
       </>
     );

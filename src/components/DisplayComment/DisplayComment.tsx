@@ -1,10 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 
 import { IComment } from "../../Models/CommentModel";
 import * as S from "./DisplayComment.styled";
 import plusIcon from "../../images/icon-plus.svg";
 import minusIcon from "../../images/icon-minus.svg";
 import replyIcon from "../../images/icon-reply.svg";
+import deleteIcon from "../../images/icon-delete.svg";
+import editIcon from "../../images/icon-edit.svg";
 import { commentContext } from "../Comment/CommentStateHandler";
 import AddCommentForm from "../AddComment/AddCommentForm";
 import { userContext } from "../CommentHandler/MyComment";
@@ -70,7 +72,7 @@ function CommentContent({
   comment: IComment;
   toggleAddReply: () => void;
 }) {
-  const user =useContext(userContext);
+  const user = useContext(userContext);
   const isCurrentUserComment = user?.username === comment.user.username;
   return (
     <>
@@ -86,21 +88,42 @@ function CommentContent({
             <div>
               <b>{comment.user.username}</b>
             </div>
-            {isCurrentUserComment && <div id = "youIcon">you</div>}
+            {isCurrentUserComment && <div id="youIcon">you</div>}
             <div id="createdAt">{comment.createdAt}</div>
-            
           </S.CommentMetaData>
-          <S.Reply
-            onClick={() => {
-              toggleAddReply();
-            }}
-          >
-            <img src={replyIcon} alt="reply-icon" />
-            <b>Reply</b>
-          </S.Reply>
+          <S.RightHead>
+            {isCurrentUserComment && (
+              <S.IconContainer $color={"rgb(228,112,123)"}>
+                <S.IconHoverOpaq>
+                  <img src={deleteIcon} alt="delete" />
+                  <b>Delete</b>
+                </S.IconHoverOpaq>
+              </S.IconContainer>
+            )}
+            {isCurrentUserComment && (
+              <S.IconContainer>
+                <S.IconHoverOpaq>
+                  <img src={editIcon} alt="edit" />
+                  <b>Edit</b>
+                </S.IconHoverOpaq>
+              </S.IconContainer>
+            )}
+            <S.IconContainer
+              onClick={() => {
+                toggleAddReply();
+              }}
+            >
+              <S.IconHoverOpaq>
+                <img src={replyIcon} alt="reply-icon" />
+                <b>Reply</b>
+              </S.IconHoverOpaq>
+            </S.IconContainer>
+          </S.RightHead>
         </S.CommentHeadder>
         <div className="comment">{comment.content}</div>
       </S.CommentMainContent>
     </>
   );
 }
+
+

@@ -43,7 +43,7 @@ export const CommentMetaData = styled.div`
     }
     & #youIcon{ 
         color:white;
-        background-color:rgb(93,96,175);;
+        background-color:rgb(93,96,175);
         padding:0em 0.5em;
         height:1.75em;
         font-weight:bold;
@@ -52,13 +52,30 @@ export const CommentMetaData = styled.div`
 export const UserIcon = styled.img`
     height:2em;
 `
-export const Reply = styled.div`
-    color:rgb(134,132,205);
+export const RightHead = styled.div`
+    display:flex;
+    gap:0.5em;
+`
+interface IconContainerProps {
+    $color?:string;
+}
+export const IconContainer = styled.div`
+    color:rgb(93,96,175);
+    color:${(props:IconContainerProps)=>{
+        return `${props.$color};`
+    }};
     cursor: pointer;
-    &> img{
+    & img{
         padding-right:0.3em;
     }
 `
+export const IconHoverOpaq = styled.div`
+        &:hover{
+            opacity:0.5;
+        }
+`
+
+
 
 export const AddReply = styled.div`
     background-color:white;
