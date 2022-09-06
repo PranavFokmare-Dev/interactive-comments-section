@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React,{ Suspense, useContext, useState } from "react";
 
 import { IComment } from "../../Models/CommentModel";
 import * as S from "./DisplayComment.styled";
@@ -8,11 +8,13 @@ import replyIcon from "../../images/icon-reply.svg";
 import deleteIcon from "../../images/icon-delete.svg";
 import editIcon from "../../images/icon-edit.svg";
 import { commentContext } from "../Comment/CommentStateHandler";
-import AddCommentForm from "../AddComment/AddCommentForm";
 import { userContext } from "../../App";
 interface CommentProps {
   comment: IComment;
 }
+
+const AddCommentForm = React.lazy(()=>import("../AddComment/AddCommentForm"))
+
 export default function DisplayComment({ comment }: CommentProps) {
   const [showAddReplyModal, setShowAddReplyModal] = useState<boolean>(false);
   const user = useContext(userContext);
@@ -30,7 +32,8 @@ export default function DisplayComment({ comment }: CommentProps) {
         />
       </S.CommentContainer>
       {showAddReplyModal && user != null && cv != null && (
-        <AddCommentForm
+        <Suspense fallback = {<div>....Loading</div>}>
+          <AddCommentForm
           user={user}
           insertComment={async (reply: string) => {
             await cv.insertReply(reply);
@@ -38,6 +41,8 @@ export default function DisplayComment({ comment }: CommentProps) {
           }}
           buttonName="REPLY"
         />
+        </Suspense>
+        
       )}
     </>
   );
