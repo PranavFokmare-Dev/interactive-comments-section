@@ -18,7 +18,7 @@ export const CommentRecursive = React.memo(function CommentRecursive({
     const verticalLines: React.ReactElement[] = [];
     for (let i = 0; i < level; i++) {
       verticalLines.push(
-        <S.GridItem colStart={i + 1} colEnd={i + 2}>
+        <S.GridItem $colStart={i + 1} $colEnd={i + 2}>
           <S.VerticalLine />
         </S.GridItem>
       );
@@ -28,7 +28,7 @@ export const CommentRecursive = React.memo(function CommentRecursive({
     return (
       <>
         {verticalLines.map((x) => x)}
-        <S.GridItem colStart={level + 1} colEnd={GridProps.lastColGridLine}>
+        <S.GridItem $colStart={level + 1} $colEnd={GridProps.lastColGridLine}>
           <CommentStateHandler id={commentId} insertReply={insertReply} />
         </S.GridItem>
         {replies.map((x) => {
