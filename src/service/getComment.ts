@@ -1,4 +1,3 @@
-import { ApiResponse } from "../Models/ApiResponse";
 import { IComment } from "../Models/CommentModel";
 import { IUser } from "../Models/UserModel";
 

@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
-import { ApiResponse, ResponseStatus } from "../Models/ApiResponse";
+import {  useState } from "react";
+import { ResponseStatus } from "../Models/ApiResponse";
 import { IUser } from "../Models/UserModel";
 import { addComment,getComments } from "../service/getComment";
-import { getUserInfo } from "../service/userImage";
 
 export function useCommentHook({user,shouldFetchComments}:{user:IUser|null,shouldFetchComments:boolean}){
     const [commentIds, setCommentIds] = useState<number[]>([]);
