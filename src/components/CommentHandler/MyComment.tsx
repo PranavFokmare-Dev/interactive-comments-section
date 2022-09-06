@@ -28,7 +28,7 @@ function ShowNewComments(){
     <>
       <S.Grid cols={GridProps.gridCols}>
           {user != null && (
-            <S.GridItem colStart={1} colEnd={GridProps.lastColGridLine}>
+            <S.GridItem $colStart={1} $colEnd={GridProps.lastColGridLine}>
               <AddCommentForm
                 user={user}
                 insertComment={insertComment}
